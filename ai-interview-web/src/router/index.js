@@ -1,0 +1,30 @@
+import { createRouter, createWebHistory } from 'vue-router'
+import Home from '../views/Home.vue'
+import BeforeInterview from '../views/BeforeInterview.vue'
+import ResumeSection from '../components/ResumeSection.vue'
+import SkillAnalysis from '../components/SkillAnalysis.vue'
+import JobRecommendation from '../components/JobRecommendation.vue'
+import QuestionBank from '../components/QuestionBank.vue'
+import LearningTest from '../components/LearningTest.vue'
+
+const routes = [
+    { path: '/', component: Home },
+    {
+        path: '/before-interview',
+        component: BeforeInterview,
+        children: [
+        { path: 'resume', component: ResumeSection },
+        { path: 'analysis', component: SkillAnalysis },
+        { path: 'jobs', component: JobRecommendation },
+        { path: 'questions', component: QuestionBank },
+        { path: 'test', component: LearningTest }
+        ]
+    }
+]
+
+const router = createRouter({
+  history: createWebHistory(),
+  routes
+})
+
+export default router
