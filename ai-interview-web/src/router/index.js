@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Home from '../views/Home.vue'
 import BeforeInterview from '../views/BeforeInterview.vue'
+import UserDetail from '../components/UserDetail.vue'
 import ResumeSection from '../components/ResumeSection.vue'
 import SkillAnalysis from '../components/SkillAnalysis.vue'
 import JobRecommendation from '../components/JobRecommendation.vue'
@@ -12,7 +13,9 @@ const routes = [
     {
         path: '/before-interview',
         component: BeforeInterview,
+        redirect: '/before-interview/detail',
         children: [
+        { path: 'detail', component: UserDetail },
         { path: 'resume', component: ResumeSection },
         { path: 'analysis', component: SkillAnalysis },
         { path: 'jobs', component: JobRecommendation },
