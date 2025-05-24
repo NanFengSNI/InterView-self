@@ -7,6 +7,7 @@ import SkillAnalysis from '../components/SkillAnalysis.vue'
 import JobRecommendation from '../components/JobRecommendation.vue'
 import QuestionBank from '../components/QuestionBank.vue'
 import LearningTest from '../components/LearningTest.vue'
+import AIResume from '../components/AIResume.vue'
 
 const routes = [
     { path: '/', component: Home },
@@ -17,6 +18,7 @@ const routes = [
         children: [
         { path: 'detail', component: UserDetail },
         { path: 'resume', component: ResumeSection },
+        { path: 'airesume', component: AIResume },
         { path: 'analysis', component: SkillAnalysis },
         { path: 'jobs', component: JobRecommendation },
         { path: 'questions', component: QuestionBank },

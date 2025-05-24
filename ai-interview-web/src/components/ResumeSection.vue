@@ -9,7 +9,7 @@
             <el-icon :size="18" style="margin-right: 6px;"><Upload /></el-icon>
             上传文件
           </el-button>
-          <el-button class="create-btn" size="large" plain>
+          <el-button class="create-btn" size="large" plain @click="openAIResume()">
             <el-icon :size="18" style="margin-right: 6px;"><DocumentAdd /></el-icon>
             使用 AI 简历生成器创建
           </el-button>
@@ -50,7 +50,7 @@
               <el-button icon="FullScreen" size="small" @click="preview(doc)"/>
             </el-tooltip>
             <el-tooltip content="AI编辑" placement="bottom">
-              <el-button icon="MagicStick" size="small" @click="edit(doc)" />
+              <el-button icon="MagicStick" size="small" @click="openAIResume()" />
             </el-tooltip>
             <el-tooltip content="下载" placement="bottom">
               <el-button icon="Download" size="small" @click="download(doc)" />
@@ -65,7 +65,22 @@
 
     <!-- 右侧区域：PDF 预览 -->
     <div class="right-panel">
-      <PdfPreview v-if="previewUrl" :fileUrl="previewUrl" />
+      <template v-if="previewUrl">
+        <!-- 清除预览按钮 -->
+        <el-tooltip content="清除预览" placement="right">
+          <el-button
+            type="danger"
+            :icon="Close"
+            class="clear-preview-btn"
+            circle
+            @click="previewUrl = ''"
+          />
+        </el-tooltip>
+
+        <!-- PDF 预览组件 -->
+        <PdfPreview :fileUrl="previewUrl" />
+      </template>
+      
       <div v-else class="pdf-preview-placeholder">
         <p>这里是 PDF 文件预览区域</p>
       </div>
@@ -117,24 +132,20 @@
     </el-button>
   </template>
 </el-dialog>
-
   </div>
-  
 </template>
 
 <script setup>
-import { MagicStick, Download, Delete, DocumentAdd, Upload, FullScreen } from '@element-plus/icons-vue'
-import { ref, computed } from 'vue'
+import { MagicStick, Download, Delete, DocumentAdd, Upload, FullScreen, Close  } from '@element-plus/icons-vue'
+import { ref, computed, onMounted } from 'vue'
+import axios from 'axios'
+import { useRouter } from 'vue-router'
 import PdfPreview from '../components/PdfPreview.vue'
+import { ElMessage, ElMessageBox, ElButton, ElTooltip } from 'element-plus'
 
-const documents = ref([
-  { name: '简历-张三.pdf', type: '简历', uploadDate: '2025-05-15', fileBlobUrl: null },
-  { name: '求职信-李四.pdf', type: '求职信', uploadDate: '2025-05-16', fileBlobUrl: null },
-  { name: '简历-王五.pdf', type: '简历', uploadDate: '2025-05-17', fileBlobUrl: null },
-])
-
+const router = useRouter()
+const documents = ref([])
 const previewUrl = ref('')
-
 const selectedType = ref(null)
 const selectedDate = ref(null)
 
@@ -147,6 +158,11 @@ const filteredDocuments = computed(() => {
     return matchType && matchDate
   })
 })
+
+const openAIResume = () => {
+  router.push('/before-interview/airesume')
+}
+
 function clearFilters() {
   selectedType.value = null
   selectedDate.value = null
@@ -157,17 +173,46 @@ function preview(doc) {
   if (doc.fileBlobUrl) {
     previewUrl.value = doc.fileBlobUrl
   } else {
-    ElMessage.warning('该文档暂未上传，无法预览')
+    ElMessage.warning('文件读取错误，无法预览')
   }
 }
-function edit(doc) {
-  console.log('AI 编辑：', doc)
-}
+
 function download(doc) {
-  console.log('下载：', doc)
+  const link = document.createElement('a')
+  link.href = doc.fileBlobUrl || doc.fileUrl
+  link.download = doc.name
+  document.body.appendChild(link)
+  link.click()
+  document.body.removeChild(link)
 }
-function remove(doc) {
-  console.log('删除：', doc)
+
+async function remove(doc) {
+  try {
+      await ElMessageBox.confirm(
+            `确定删除「${doc.name}」吗？`,
+        {
+          confirmButtonText: '彻底删除',
+          cancelButtonText: '取消',
+          type: 'warning',
+        }
+      )
+
+    await axios.delete(`/api/delete/${doc.name}`)
+
+    // 重新拉取文档列表
+    await fetchDocuments()
+
+    if (previewUrl.value === doc.fileBlobUrl) {
+      previewUrl.value = ''
+    }
+
+    ElMessage.success('文件已删除')
+  } catch (error) {
+    if (error !== 'cancel') {
+      console.error('删除失败:', error)
+      ElMessage.error('删除失败')
+    }
+  }
 }
 
 // 弹窗相关
@@ -182,7 +227,6 @@ const fileInput = ref(null)
 
 function handleBeforeUpload(file) {
   const isAllowed = file.type === 'application/pdf';
-
   const isLt5M = file.size / 1024 / 1024 < 5;
 
   if (!isAllowed) {
@@ -196,35 +240,81 @@ function handleBeforeUpload(file) {
 
   uploadForm.value.file = file;
   uploadForm.value.fileName = file.name;
-  return false; // 手动上传
+  return false;
 }
 
 function resetUploadDialog() {
-  uploadForm.value.file = null
-  uploadForm.value.fileName = ''
-  uploadForm.value.type = '简历'
+   uploadForm.value = {
+    file: null,
+    fileName: '',
+    type: '简历',
+  }
   if (fileInput.value) fileInput.value.value = ''
 }
 
-function submitUpload() {
+async function submitUpload() {
   if (!uploadForm.value.file) return
 
-  const today = new Date().toISOString().slice(0, 10)
-  const blobUrl = URL.createObjectURL(uploadForm.value.file)
+  const formData = new FormData()
+  formData.append('file', uploadForm.value.file)
+  formData.append('type', uploadForm.value.type)
 
-  const newDoc = {
-    name: uploadForm.value.fileName,
-    type: uploadForm.value.type,
-    uploadDate: today,
-    fileBlobUrl: blobUrl,
+  try {
+    const response = await axios.post('/api/upload', formData, {
+      headers: { 'Content-Type': 'multipart/form-data' }
+    })
+
+    const today = new Date().toISOString().slice(0, 10)
+    const blobUrl = URL.createObjectURL(uploadForm.value.file)
+
+    const newDoc = {
+      id: response.data.id, // 从后端返回的数据中获取
+      name: uploadForm.value.fileName,
+      type: uploadForm.value.type,
+      uploadDate: today,
+      fileBlobUrl: blobUrl,
+      fileUrl: response.data.url || null // 可用于后续下载
+    }
+
+    documents.value.push(newDoc)
+    previewUrl.value = blobUrl
+
+    ElMessage.success('上传成功')
+    uploadDialogVisible.value = false
+    resetUploadDialog()
+  } catch (error) {
+    ElMessage.error('上传失败')
   }
-
-  documents.value.push(newDoc)
-  previewUrl.value = blobUrl
-
-  uploadDialogVisible.value = false
-  resetUploadDialog()
 }
+
+async function fetchDocuments() {
+  try {
+    const response = await axios.get('/api/files')
+    const files = response.data  // [{ id, name, type, uploadDate, fileUrl }]
+
+    // 对每个文件拉取 blob 生成本地预览地址
+    const processed = await Promise.all(
+      files.map(async file => {
+        try {
+          const res = await axios.get(file.fileUrl, { responseType: 'blob' })
+          const blobUrl = URL.createObjectURL(res.data)
+          return { ...file, fileBlobUrl: blobUrl }
+        } catch (e) {
+          return { ...file, fileBlobUrl: null }
+        }
+      })
+    )
+
+    documents.value = processed
+  } catch (error) {
+    ElMessage.error('加载文件失败')
+  }
+}
+
+// 页面加载时从后端加载文件
+onMounted(async () => {
+  await fetchDocuments()
+})
 
 </script>
 
@@ -251,12 +341,29 @@ function submitUpload() {
 
 /* 右侧面板：PDF 预览区域 */
 .right-panel {
+  position: relative; /* 相对定位，方便子元素绝对定位 */
   flex: 1; /* 弹性比例，宽度稍窄 */
   padding: 10px 20px 24px 24px; /* 内边距，上右下左 */
   box-sizing: border-box; /* 同上，包含 padding 和 border */
   background: #fff; /* 背景白色 */
   display: flex; /* 使用 flexbox 让内容居中显示 */
   flex-direction: column; /* 改为纵向排列 */
+}
+.clear-preview-btn {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  z-index: 100;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  background-color: #f56c6c !important;
+  color: white !important;
+  font-size: 18px;
+  transition: all 0.3s ease;
+}
+
+.clear-preview-btn:hover {
+  background-color: #dd6161 !important;
+  transform: scale(1.1);
 }
 
 /* 操作区块：按钮和筛选区域整体背景和间距 */
@@ -293,6 +400,7 @@ function submitUpload() {
   background-color: #222222; /* 悬浮时变深点 */
   color: #ffffff !important;
 }
+
 
 /* 遮罩层加深 */
 ::deep(.el-overlay) {
@@ -481,7 +589,11 @@ function submitUpload() {
 /* 文件名样式 */
 .file-name {
   font-weight: 600; /* 字体加粗 */
+  max-width: 180px; /* 可根据需要调整 */
+  overflow: hidden; /* 超出部分隐藏 */
+  text-overflow: ellipsis; /* 超出部分用省略号表示 */
   font-size: 15px; /* 字体大小 */
+  white-space: nowrap; /* 不换行 */
   color: #333; /* 深色，突出 */
 }
 

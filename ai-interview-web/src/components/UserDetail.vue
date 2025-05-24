@@ -1,6 +1,6 @@
 <template>
-  <div class="question-bank-wrapper">
-    <p>这里是用户个人信息。</p>
+  <div class="user-detail-wrapper">
+    <p>这里是个人信息内容。</p>
   </div>
 </template>
 
