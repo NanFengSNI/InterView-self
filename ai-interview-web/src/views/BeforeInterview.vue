@@ -168,7 +168,7 @@ html, body {
 /* 顶部导航栏样式 */
 .header {
   height: 64px; /* 固定高度为 64px */
-  background-color: #5d9ad649; /* 背景色为浅灰色 */
+  background-color: #bbc5cf49; /* 背景色为浅灰色 */
   display: flex; /* 使用 flex 布局 */
   justify-content: space-between; /* 子元素两端对齐 */
   align-items: center; /* 子元素垂直居中 */
@@ -228,7 +228,7 @@ html, body {
   width: 36px; /* 宽度为 36px */
   height: 36px; /* 高度为 36px */
   font-size: 16px; /* 字体大小为 16px */
-  background-color: #409eff; /* 背景蓝色 */
+  background-color: #050505; /* 背景蓝色 */
   color: white; /* 字体白色 */
 }
 
@@ -319,8 +319,10 @@ html, body {
 
 /* 功能名称文字样式 */
 .sidebar-text {
-  font-size: 16px;             /* 字体大小为 16px，适中清晰 */
-  color: #3f3d3d;                 /* 字体颜色为深灰，易于阅读 */
+  font-size: 16px;  
+  font-weight: 500; /* 加粗字体 */ 
+  font-family: 'Microsoft YaHei', sans-serif;        
+  color: #0f0f0f;                 /* 字体颜色为深灰，易于阅读 */
 }
 
 /* 右侧浮动侧边栏圆角处理 */
@@ -362,7 +364,7 @@ html, body {
 
 /* 侧边栏中的头像样式 */
 .sidebar-avatar {
-  background-color: #409eff; /* 背景蓝色 */
+  background-color: #000000; /* 背景蓝色 */
   color: white; /* 字体颜色白色 */
   width: 36px; /* 宽度 36px */
   height: 36px; /* 高度 36px */

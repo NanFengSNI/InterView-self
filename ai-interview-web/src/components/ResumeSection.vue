@@ -26,7 +26,7 @@
             clearable
             style="width: 160px;"
           />
-          <el-button size="small" type="text" @click="clearFilters" style="margin-left:auto; color:#409eff;">
+          <el-button size="small" type="text" class="clear-filters-btn" @click="clearFilters" style="margin-left:auto;">
             清除筛选
           </el-button>
         </div>
@@ -537,21 +537,16 @@ onMounted(async () => {
 
 /* 鼠标悬停时边框颜色高亮 */
 .el-select:hover, .el-date-picker:hover {
-  border-color: #409eff; /* Element Plus 主题蓝色 */
+  border-color: #121213; /* Element Plus 主题蓝色 */
 }
 
 /* 清除筛选按钮样式 */
 .clear-filters-btn {
   margin-left: auto; /* 自动左外边距，推至右侧 */
   cursor: pointer; /* 鼠标样式为手指 */
-  color: #909399; /* 默认字体颜色，灰色 */
+  color: #4c89a5; /* 默认字体颜色，灰色 */
   font-size: 12px; /* 字体较小 */
   user-select: none; /* 禁止文本选中 */
-}
-
-/* 清除筛选按钮悬停效果 */
-.clear-filters-btn:hover {
-  color: #409eff; /* 高亮蓝色 */
 }
 
 /* 文件卡片列表：使用 CSS Grid 自适应排列 */
@@ -594,7 +589,7 @@ onMounted(async () => {
   text-overflow: ellipsis; /* 超出部分用省略号表示 */
   font-size: 15px; /* 字体大小 */
   white-space: nowrap; /* 不换行 */
-  color: #333; /* 深色，突出 */
+  color: #181717; /* 深色，突出 */
 }
 
 /* 上传日期样式 */

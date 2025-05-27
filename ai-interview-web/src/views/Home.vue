@@ -15,7 +15,7 @@
       <h1>欢迎来到 <span class="highlight">SSS AI InterView
       </span></h1>
       <p>你的 AI 面试助理，助你决胜终面</p>
-      <router-link to="/before-interview">
+      <router-link to="/login">
         <el-button type="primary" size="large">🚀 开始模拟面试</el-button>
       </router-link>
 

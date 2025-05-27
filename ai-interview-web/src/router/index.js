@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Home from '../views/Home.vue'
+import Login from '../views/LoginPage.vue'
 import BeforeInterview from '../views/BeforeInterview.vue'
 import UserDetail from '../components/UserDetail.vue'
 import ResumeSection from '../components/ResumeSection.vue'
@@ -11,6 +12,7 @@ import AIResume from '../components/AIResume.vue'
 
 const routes = [
     { path: '/', component: Home },
+    { path: '/login', component: Login },
     {
         path: '/before-interview',
         component: BeforeInterview,
