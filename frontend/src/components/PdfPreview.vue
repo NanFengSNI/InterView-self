@@ -6,10 +6,11 @@
 
 <script setup>
 import { onMounted, watch, ref, nextTick } from 'vue'
-import * as pdfjsLib from 'pdfjs-dist'
+import { GlobalWorkerOptions } from 'pdfjs-dist'
+import workerSrc from 'pdfjs-dist/build/pdf.worker.mjs?url'
 
-// ✅ 使用 CDN 的 worker 路径
-pdfjsLib.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjsLib.version}/pdf.worker.min.js`
+// 设置 worker 路径
+GlobalWorkerOptions.workerSrc = workerSrc
 
 const props = defineProps({
   fileUrl: String
@@ -35,7 +36,9 @@ async function renderPDF(url) {
     data = url // 网络 PDF 地址
   }
 
-  const loadingTask = pdfjsLib.getDocument({ data })
+  const loadingTask = pdfjsLib.getDocument(
+  url.startsWith('blob:') ? { data } : url
+  ) 
   const pdf = await loadingTask.promise
   const totalPages = pdf.numPages
 

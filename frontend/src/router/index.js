@@ -11,7 +11,7 @@ import LearningTest from '../components/LearningTest.vue'
 import AIResume from '../components/AIResume.vue'
 
 const routes = [
-    { path: '/', component: Home },
+    { path: '/', component: BeforeInterview },
     { path: '/login', component: Login },
     {
         path: '/before-interview',

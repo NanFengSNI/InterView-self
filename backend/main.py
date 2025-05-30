@@ -1,9 +1,11 @@
 
 #  uvicorn main:app --reload --host 0.0.0.0 --port 8000
-from fastapi import FastAPI, UploadFile, File, Request
+from fastapi import FastAPI, UploadFile, File, Request, Query, HTTPException
 from fastapi.responses import FileResponse, JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 from pathlib import Path
+from typing import List
+from pydantic import BaseModel
 from uuid import uuid4
 import random
 import shutil
@@ -36,6 +38,24 @@ def save_metadata(metadata):
         json.dump(metadata, f, ensure_ascii=False, indent=2)
 
 DOC_TYPES = ["简历", "求职信", "其他"]
+
+@app.get("/api/user-profile")
+def get_user_profile():
+    data_file = Path("user_data.json")
+    if not data_file.exists():
+        return {"error": "user data not found"}
+    with open(data_file, "r", encoding="utf-8") as f:
+        user_data = json.load(f)
+    return user_data
+
+@app.get("/api/job-recommendations")
+def get_job_recommendations():
+    data_file = Path("job_recommend.json")
+    if not data_file.exists():
+        return {"error": "job data not found"}
+    with open(data_file, "r", encoding="utf-8") as f:
+        job_data = json.load(f)
+    return job_data
 
 @app.post("/api/upload")
 async def upload_file(file: UploadFile = File(...)):
@@ -97,5 +117,3 @@ def delete_file(filename: str):
             save_metadata(metadata)
         return {"message": f"{filename} 已删除"}
     return JSONResponse(status_code=404, content={"message": "文件不存在"})
-
-USER_FILE = Path("users.json")

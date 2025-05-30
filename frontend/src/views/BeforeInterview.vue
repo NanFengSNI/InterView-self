@@ -78,7 +78,6 @@
             </el-tooltip>
           </div>
         </div>
-        <!-- 可添加更多内容 -->
       </div>
     </transition>
   </div>
@@ -141,7 +140,6 @@ const menuItems = [
   { name: '题库展示', icon: Files , route: '/before-interview/questions'},
   { name: '学习训练', icon: Notebook , route: '/before-interview/test'}
 ]
-
 </script>
 
 <style>
@@ -235,8 +233,8 @@ html, body {
 /* 主体内容区域样式 */
 .main-content {
   flex-grow: 1; /* 填满剩余空间 */
-  padding: 64px 1px 1px 1px; 
-  overflow-y: hidden; 
+  padding: 104px 1px 1px 1px; 
+  overflow-y: auto; 
   background-color: #fcfcfc; /* 白色背景 */
 }
 

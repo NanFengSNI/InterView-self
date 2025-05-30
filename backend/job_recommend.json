@@ -1,0 +1,46 @@
+[
+  {
+    "title": "软件开发工程师",
+    "salary": "18-35K",
+    "salaryMin": 18000,
+    "salaryMax": 35000,
+    "recommendScore": 95,
+    "experience": "经验不限",
+    "education": "本科",
+    "type": "全职",
+    "company": "合见科技",
+    "location": "成都",
+    "tags": ["C++", "不限学历", "弹性工作"],
+    "description": ["参与公司软件产品的设计与开发；", "编写清晰、易维护的代码；", "协助产品团队实现业务功能。"],
+    "requirements": ["计算机相关专业优先；", "熟练掌握 C++ 或 Python；", "有良好的团队沟通能力。"],
+    "recruiter": {
+      "name": "李女士",
+      "company": "合见科技",
+      "avatar": "https://example.com/avatar2.png"
+    },
+    "address": "成都双流区",
+    "mapUrl": "https://example.com/map2.png"
+  },
+  {
+    "title": "销售总监",
+    "salary": "15-30K",
+    "salaryMin": 15000,
+    "salaryMax": 30000,
+    "recommendScore": 89,
+    "experience": "5-10年",
+    "education": "本科",
+    "type": "全职",
+    "company": "佳都科技",
+    "location": "北京",
+    "tags": ["销售管理", "商务谈判能力", "客户资源"],
+    "description": ["负责公司销售战略的制定与执行；", "带领销售团队完成季度目标；", "维护并拓展大客户资源。"],
+    "requirements": ["具备5年以上销售管理经验；", "有行业客户资源者优先；", "沟通能力强，抗压能力好。"],
+    "recruiter": {
+      "name": "王总",
+      "company": "佳都科技",
+      "avatar": "https://example.com/avatar3.png"
+    },
+    "address": "北京市海淀区",
+    "mapUrl": "https://example.com/map3.png"
+  }
+]

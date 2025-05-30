@@ -1,0 +1,55 @@
+{
+  "name": "张三",
+  "gender": "男",
+  "phone": "138****8888",
+  "email": "zhangsan@example.com",
+  "wannajob": "前端开发工程师",
+  "wannafirm": "华为",
+  "skills": ["Vue3", "TypeScript", "JavaScript", "Element Plus", "Node.js", "HTML5", "CSS3"],
+  "languages": "中文（母语），英语（流利）",
+  "bio": "具有扎实的前端开发基础和良好的工程实践经验，热爱学习新技术，具备良好的沟通与团队协作能力。",
+  "education": [
+    {
+      "school": "清华大学",
+      "degree": "本科",
+      "major": "计算机科学与技术",
+      "date": "2016 - 2020",
+      "gpa": "3.8 / 4.0"
+    },
+    {
+      "school": "斯坦福大学",
+      "degree": "硕士",
+      "major": "人工智能",
+      "date": "2020 - 2022",
+      "gpa": "3.9 / 4.0"
+    }
+  ],
+  "projects": [
+    {
+      "name": "智能招聘系统",
+      "role": "前端负责人",
+      "date": "2022.06 - 2022.12",
+      "description": "负责系统前端架构设计和开发，使用 Vue3 + Element Plus 构建候选人管理、面试排期模块。"
+    },
+    {
+      "name": "在线编程平台",
+      "role": "全栈开发",
+      "date": "2021.03 - 2021.09",
+      "description": "独立搭建代码运行环境，支持多语言在线编译，优化执行性能30%。"
+    }
+  ],
+  "experience": [
+    {
+      "company": "字节跳动",
+      "position": "前端工程师",
+      "date": "2022.07 - 至今",
+      "description": "参与短视频推荐系统管理后台开发，主导多个性能优化项目。"
+    },
+    {
+      "company": "阿里巴巴",
+      "position": "前端实习生",
+      "date": "2021.06 - 2021.12",
+      "description": "参与钉钉插件开发，优化数据展示组件，提高渲染效率。"
+    }
+  ]
+}
