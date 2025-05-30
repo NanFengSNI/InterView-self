@@ -1,45 +1,10 @@
 <template>
   <div class="app-container">
-    <!-- 筛选栏 -->
-    <div class="filter-bar">
-      <div class="container">
-        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
-          <div class="flex items-center space-x-4">
-            <el-select v-model="selectedPosition" placeholder="请选择岗位" class="w-40">
-              <el-option label="开发岗" value="dev"></el-option>
-              <el-option label="运营岗" value="ops"></el-option>
-              <el-option label="设计岗" value="design"></el-option>
-              <el-option label="销售岗" value="sales"></el-option>
-            </el-select>
-            
-            <div class="hidden md:flex items-center space-x-4">
-              <el-input v-model="searchKeyword" placeholder="搜索题目关键词" class="w-64 lg:w-80">
-                <template #prefix>
-                  <el-icon><Search /></el-icon>
-                </template>
-              </el-input>
-              <el-button type="primary" @click="handleSearch">
-                <el-icon><Search /></el-icon> 搜索
-              </el-button>
-            </div>
-          </div>
-          
-          <div class="flex items-center space-x-2 md:hidden">
-            <el-input v-model="searchKeyword" placeholder="搜索题目" class="w-full">
-              <template #prefix>
-                <el-icon><Search /></el-icon>
-              </template>
-            </el-input>
-          </div>
-        </div>
-      </div>
-    </div>
-
     <!-- 主内容区 -->
     <main class="main-container container mx-auto py-6">
       <div class="flex flex-col lg:flex-row gap-6">
         <!-- 左侧分类导航 -->
-        <div class="left-nav w-full lg:w-1/4">
+        <div class="left-nav w-full lg:w-1/4 fixed-width-nav" :class="{ 'fixed-nav': isNavFixed, 'collapsed-nav': isNavCollapsed }">
           <div class="bg-white rounded-lg shadow-sm p-4 sticky top-6">
             <h3 class="text-lg font-bold mb-4 text-dark">岗位分类</h3>
             <el-menu
@@ -48,60 +13,130 @@
               @select="handleCategorySelect"
               class="border-none"
             >
-              <el-menu-item index="dev" class="px-3 py-2 rounded-md cursor-pointer flex items-center">
-                <el-icon><Menu /></el-icon>
-                <span>开发岗</span>
-              </el-menu-item>
-              <el-menu-item index="ops" class="px-3 py-2 rounded-md cursor-pointer flex items-center">
-                <el-icon><Menu /></el-icon>
-                <span>运营岗</span>
-              </el-menu-item>
-              <el-menu-item index="design" class="px-3 py-2 rounded-md cursor-pointer flex items-center">
-                <el-icon><Menu /></el-icon>
-                <span>设计岗</span>
-              </el-menu-item>
-              <el-menu-item index="sales" class="px-3 py-2 rounded-md cursor-pointer flex items-center">
-                <el-icon><Menu /></el-icon>
-                <span>销售岗</span>
-              </el-menu-item>
-              <el-menu-item index="hr" class="px-3 py-2 rounded-md cursor-pointer flex items-center">
-                <el-icon><User /></el-icon>
-                <span>人力资源</span>
-              </el-menu-item>
-              <el-menu-item index="education" class="px-3 py-2 rounded-md cursor-pointer flex items-center">
-                <el-icon><Menu /></el-icon>
-                <span>教育岗</span>
-              </el-menu-item>
+              <!-- 人工智能领域 -->
+              <el-sub-menu index="ai">
+                <template #title>
+                  <el-icon><Menu /></el-icon>
+                  <span>人工智能</span>
+                </template>
+                <el-menu-item index="ai-algorithm" class="px-3 py-2 rounded-md cursor-pointer flex items-center">
+                  <el-icon><Menu /></el-icon>
+                  <span>人工智能算法工程师</span>
+                </el-menu-item>
+                <el-menu-item index="ai-data" class="px-3 py-2 rounded-md cursor-pointer flex items-center">
+                  <el-icon><Menu /></el-icon>
+                  <span>人工智能数据工程师</span>
+                </el-menu-item>
+                <el-menu-item index="ai-dev" class="px-3 py-2 rounded-md cursor-pointer flex items-center">
+                  <el-icon><Menu /></el-icon>
+                  <span>人工智能开发工程师</span>
+                </el-menu-item>
+                <el-menu-item index="ai-research" class="px-3 py-2 rounded-md cursor-pointer flex items-center">
+                  <el-icon><Menu /></el-icon>
+                  <span>人工智能研究员</span>
+                </el-menu-item>
+                <el-menu-item index="ai-product" class="px-3 py-2 rounded-md cursor-pointer flex items-center">
+                  <el-icon><Menu /></el-icon>
+                  <span>人工智能产品经理</span>
+                </el-menu-item>
+              </el-sub-menu>
+
+              <!-- 大数据领域 -->
+              <el-sub-menu index="big-data">
+                <template #title>
+                  <el-icon><Menu /></el-icon>
+                  <span>大数据</span>
+                </template>
+                <el-menu-item index="big-data-analyst" class="px-3 py-2 rounded-md cursor-pointer flex items-center">
+                  <el-icon><Menu /></el-icon>
+                  <span>大数据分析师</span>
+                </el-menu-item>
+                <el-menu-item index="big-data-engineer" class="px-3 py-2 rounded-md cursor-pointer flex items-center">
+                  <el-icon><Menu /></el-icon>
+                  <span>大数据工程师</span>
+                </el-menu-item>
+                <el-menu-item index="big-data-architect" class="px-3 py-2 rounded-md cursor-pointer flex items-center">
+                  <el-icon><Menu /></el-icon>
+                  <span>大数据架构师</span>
+                </el-menu-item>
+                <el-menu-item index="big-data-mining" class="px-3 py-2 rounded-md cursor-pointer flex items-center">
+                  <el-icon><Menu /></el-icon>
+                  <span>大数据挖掘工程师</span>
+                </el-menu-item>
+              </el-sub-menu>
+
+              <!-- 物联网领域 -->
+              <el-sub-menu index="iot">
+                <template #title>
+                  <el-icon><Menu /></el-icon>
+                  <span>物联网</span>
+                </template>
+                <el-menu-item index="iot-dev" class="px-3 py-2 rounded-md cursor-pointer flex items-center">
+                  <el-icon><Menu /></el-icon>
+                  <span>物联网开发工程师</span>
+                </el-menu-item>
+                <el-menu-item index="iot-sensor" class="px-3 py-2 rounded-md cursor-pointer flex items-center">
+                  <el-icon><Menu /></el-icon>
+                  <span>物联网传感器工程师</span>
+                </el-menu-item>
+                <el-menu-item index="iot-security" class="px-3 py-2 rounded-md cursor-pointer flex items-center">
+                  <el-icon><Menu /></el-icon>
+                  <span>物联网安全工程师</span>
+                </el-menu-item>
+                <el-menu-item index="iot-product" class="px-3 py-2 rounded-md cursor-pointer flex items-center">
+                  <el-icon><Menu /></el-icon>
+                  <span>物联网产品经理</span>
+                </el-menu-item>
+              </el-sub-menu>
+
+              <!-- 软件开发领域 -->
+              <el-sub-menu index="software-dev">
+                <template #title>
+                  <el-icon><Menu /></el-icon>
+                  <span>软件开发</span>
+                </template>
+                <el-menu-item index="web-dev" class="px-3 py-2 rounded-md cursor-pointer flex items-center">
+                  <el-icon><Menu /></el-icon>
+                  <span>Web开发工程师</span>
+                </el-menu-item>
+                <el-menu-item index="mobile-dev" class="px-3 py-2 rounded-md cursor-pointer flex items-center">
+                  <el-icon><Menu /></el-icon>
+                  <span>移动开发工程师</span>
+                </el-menu-item>
+                <el-menu-item index="game-dev" class="px-3 py-2 rounded-md cursor-pointer flex items-center">
+                  <el-icon><Menu /></el-icon>
+                  <span>游戏开发工程师</span>
+                </el-menu-item>
+                <el-menu-item index="software-test" class="px-3 py-2 rounded-md cursor-pointer flex items-center">
+                  <el-icon><Menu /></el-icon>
+                  <span>软件测试工程师</span>
+                </el-menu-item>
+                <el-menu-item index="software-architect" class="px-3 py-2 rounded-md cursor-pointer flex items-center">
+                  <el-icon><Menu /></el-icon>
+                  <span>软件架构师</span>
+                </el-menu-item>
+              </el-sub-menu>
             </el-menu>
-            
-            <div class="mt-6 pt-4 border-t border-gray-100">
-              <h4 class="font-medium mb-3 text-dark">快速筛选</h4>
-              <div class="flex flex-wrap gap-2">
-                <el-tag class="cursor-pointer hover:bg-gray-200 transition-colors">高频题</el-tag>
-                <el-tag class="cursor-pointer hover:bg-gray-200 transition-colors">最新题</el-tag>
-                <el-tag class="cursor-pointer hover:bg-gray-200 transition-colors">模拟题</el-tag>
-                <el-tag class="cursor-pointer hover:bg-gray-200 transition-colors">面试题</el-tag>
-              </div>
-            </div>
           </div>
         </div>
-        
+
         <!-- 右侧题目列表 -->
         <div class="question-list w-full lg:w-3/4">
           <div class="bg-white rounded-lg shadow-sm p-6">
+            <!-- 题目列表内容 -->
             <div class="flex flex-col md:flex-row md:items-center justify-between mb-6">
               <h2 class="text-xl font-bold text-dark">开发岗题库</h2>
               <div class="mt-2 md:mt-0 flex items-center space-x-3">
                 <span class="count text-sm text-gray-500">共120道题</span>
                 <el-select v-model="sortOption" placeholder="排序方式" class="w-36">
                   <el-option label="默认排序" value="default"></el-option>
+                  <el-option label="题库难度" value="difficulty"></el-option>
                   <el-option label="最新添加" value="latest"></el-option>
-                  <el-option label="最多练习" value="mostPracticed"></el-option>
                   <el-option label="题目数量" value="questionCount"></el-option>
                 </el-select>
               </div>
             </div>
-            
+
             <!-- 技术分类标签 -->
             <div class="mb-6">
               <div class="flex flex-wrap gap-2">
@@ -116,7 +151,7 @@
                 </el-tag>
               </div>
             </div>
-            
+
             <!-- 技术领域题库展示 -->
             <div class="space-y-8">
               <!-- 技术领域区域 -->
@@ -126,6 +161,7 @@
                 :id="tech.id"
                 class="tech-section"
               >
+                <!-- 技术领域标题 -->
                 <div class="flex items-center justify-between mb-4">
                   <h3 class="text-lg font-bold text-dark flex items-center">
                     <el-icon :class="tech.iconClass"></el-icon>
@@ -133,7 +169,7 @@
                   </h3>
                   <span class="text-sm text-gray-500">{{ tech.examCount }}套题</span>
                 </div>
-                
+
                 <div class="relative">
                   <!-- 滚动控制按钮 -->
                   <el-button 
@@ -146,7 +182,7 @@
                   >
                     <el-icon><ArrowLeft /></el-icon>
                   </el-button>
-                  
+
                   <!-- 题库卡片滚动区域 -->
                   <div class="overflow-x-auto hide-scrollbar pb-2">
                     <div 
@@ -187,7 +223,7 @@
                       </div>
                     </div>
                   </div>
-                  
+
                   <!-- 滚动控制按钮 -->
                   <el-button 
                     type="default" 
@@ -202,7 +238,7 @@
                 </div>
               </div>
             </div>
-            
+
             <!-- 分页控件 -->
             <div class="pagination mt-8 flex items-center justify-between">
               <div class="text-sm text-gray-500">
@@ -221,6 +257,16 @@
             </div>
           </div>
         </div>
+
+        <!-- 右侧统计卡片 -->
+        <div class="statistics-cards w-full lg:w-1/4" :class="{ 'fixed-cards': isCardsFixed, 'collapsed-cards': isCardsCollapsed }">
+          <div class="bg-white rounded-lg shadow-sm p-4 sticky top-6">
+            <div class="statistic-card mb-4">
+              <h4 class="text-lg font-bold text-dark">总题数</h4>
+              <p class="text-xl text-gray-500">120</p>
+            </div>
+          </div>
+        </div>
       </div>
     </main>
   </div>
@@ -233,12 +279,16 @@ import {
 } from '@element-plus/icons-vue';
 
 // 状态管理
-const selectedPosition = ref('dev');
-const searchKeyword = ref('');
 const activeCategory = ref('dev');
 const sortOption = ref('default');
 const currentPage = ref(1);
 const pageSize = ref(3);
+
+// 新增状态
+const isNavFixed = ref(false);
+const isNavCollapsed = ref(false);
+const isCardsFixed = ref(false);
+const isCardsCollapsed = ref(false);
 
 // 技术标签数据
 const techTags = reactive([
@@ -378,7 +428,6 @@ const displayedTechSections = computed(() => {
 // 处理岗位选择
 const handleCategorySelect = (value) => {
   activeCategory.value = value;
-  selectedPosition.value = value;
   
   // 更新题库标题
   const positionNames = {
@@ -403,12 +452,6 @@ const handleCategorySelect = (value) => {
     'education': '58'
   };
   document.querySelector('.count').textContent = `共${counts[value] || '120'}道题`;
-};
-
-// 搜索处理
-const handleSearch = () => {
-  console.log('搜索关键词:', searchKeyword.value);
-  // 实际应用中这里应该调用搜索API
 };
 
 // 滚动到指定技术领域
@@ -467,13 +510,34 @@ const handleCurrentChange = (newPage) => {
 
 // 监听滚动事件
 const handleScroll = () => {
-  const filterBar = document.querySelector('.filter-bar');
-  if (window.scrollY > 10) {
-    filterBar.classList.add('shadow-md');
-    filterBar.classList.remove('shadow-sm');
+  const navElement = document.querySelector('.left-nav');
+  const cardsElement = document.querySelector('.statistics-cards');
+  const navOffsetTop = navElement.offsetTop;
+  const cardsOffsetTop = cardsElement.offsetTop;
+  const scrollTop = window.scrollY;
+
+  if (scrollTop > navOffsetTop) {
+    isNavFixed.value = true;
+    if (scrollTop > navOffsetTop + navElement.offsetHeight) {
+      isNavCollapsed.value = true;
+    } else {
+      isNavCollapsed.value = false;
+    }
   } else {
-    filterBar.classList.remove('shadow-md');
-    filterBar.classList.add('shadow-sm');
+    isNavFixed.value = false;
+    isNavCollapsed.value = false;
+  }
+
+  if (scrollTop > cardsOffsetTop) {
+    isCardsFixed.value = true;
+    if (scrollTop > cardsOffsetTop + cardsElement.offsetHeight) {
+      isCardsCollapsed.value = true;
+    } else {
+      isCardsCollapsed.value = false;
+    }
+  } else {
+    isCardsFixed.value = false;
+    isCardsCollapsed.value = false;
   }
 };
 
@@ -508,17 +572,8 @@ onUnmounted(() => {
 }
 
 .container {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 0 1rem;
-}
-
-/* 筛选栏样式 */
-.filter-bar {
-  background-color: white;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
-  padding: 1rem 0;
-  transition: box-shadow 0.3s ease;
+  max-width: 1690px; /* 增加最大宽度 */
+  padding: 0 0.75rem; /* 减小左右内边距 */
 }
 
 /* 左侧导航样式 */
@@ -543,6 +598,34 @@ onUnmounted(() => {
       font-weight: 500;
     }
   }
+}
+
+/* 固定导航宽度 */
+.fixed-width-nav {
+  width: 700px; /* 设置固定宽度，可以根据实际情况调整 */
+}
+
+/* 菜单项超出省略号显示 */
+.fixed-width-nav .el-menu-item span {
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* 固定导航样式 */
+.fixed-nav {
+  position: fixed;
+  top: 0;
+  z-index: 100;
+  transition: all 0.3s ease;
+}
+
+/* 折叠导航样式 */
+.collapsed-nav {
+  width: auto;
+  transform: scale(0.8);
+  transform-origin: top left;
 }
 
 /* 题库卡片样式 */
@@ -604,10 +687,46 @@ onUnmounted(() => {
   scrollbar-width: none;
 }
 
-/* 响应式设计 */
+/* 响应式设计 */  
 @media (max-width: 768px) {
   .left-nav {
     margin-bottom: 1.5rem;
   }
+  
+  .container {
+    padding: 0 0.5rem; /* 在小屏幕上进一步减小内边距 */
+  }
+}
+
+/* 统计卡片样式 */
+.statistics-cards {
+  transition: all 0.3s ease;
+}
+
+/* 固定统计卡片样式 */
+.fixed-cards {
+  position: fixed;
+  top: 0;
+  z-index: 100;
+}
+
+/* 折叠统计卡片样式 */
+.collapsed-cards {
+  width: auto;
+  transform: scale(0.8);
+  transform-origin: top right;
+}
+
+/* 统计卡片内容样式 */
+.statistic-card {
+  border-bottom: 1px solid #e5e7eb;
+  padding-bottom: 1rem;
+  margin-bottom: 1rem;
+}
+
+.statistic-card:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+  margin-bottom: 0;
 }
 </style>
