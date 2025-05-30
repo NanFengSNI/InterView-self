@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <!-- 顶部筛选栏 -->
+    <!-- 筛选栏 -->
     <div class="filter-bar">
       <div class="container">
         <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
@@ -41,7 +41,7 @@
         <!-- 左侧分类导航 -->
         <div class="left-nav w-full lg:w-1/4">
           <div class="bg-white rounded-lg shadow-sm p-4 sticky top-6">
-            <h3 class="text-lg font-bold mb-4">岗位分类</h3>
+            <h3 class="text-lg font-bold mb-4 text-dark">岗位分类</h3>
             <el-menu
               mode="vertical"
               :default-active="activeCategory"
@@ -75,7 +75,7 @@
             </el-menu>
             
             <div class="mt-6 pt-4 border-t border-gray-100">
-              <h4 class="font-medium mb-3">快速筛选</h4>
+              <h4 class="font-medium mb-3 text-dark">快速筛选</h4>
               <div class="flex flex-wrap gap-2">
                 <el-tag class="cursor-pointer hover:bg-gray-200 transition-colors">高频题</el-tag>
                 <el-tag class="cursor-pointer hover:bg-gray-200 transition-colors">最新题</el-tag>
@@ -90,7 +90,7 @@
         <div class="question-list w-full lg:w-3/4">
           <div class="bg-white rounded-lg shadow-sm p-6">
             <div class="flex flex-col md:flex-row md:items-center justify-between mb-6">
-              <h2 class="text-xl font-bold">开发岗题库</h2>
+              <h2 class="text-xl font-bold text-dark">开发岗题库</h2>
               <div class="mt-2 md:mt-0 flex items-center space-x-3">
                 <span class="count text-sm text-gray-500">共120道题</span>
                 <el-select v-model="sortOption" placeholder="排序方式" class="w-36">
@@ -127,7 +127,7 @@
                 class="tech-section"
               >
                 <div class="flex items-center justify-between mb-4">
-                  <h3 class="text-lg font-bold flex items-center">
+                  <h3 class="text-lg font-bold text-dark flex items-center">
                     <el-icon :class="tech.iconClass"></el-icon>
                     {{ tech.name }}
                   </h3>
@@ -161,13 +161,13 @@
                         class="exam-card bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg hover:-translate-y-1 transition-all duration-300 w-64"
                       >
                         <div class="p-5">
-                          <h4 class="font-medium mb-3">{{ exam.title }}</h4>
+                          <h4 class="font-medium text-dark mb-3">{{ exam.title }}</h4>
                           <div class="flex items-center text-sm text-gray-500 mb-3">
-                            <el-icon><Menu /></el-icon>
+                            <el-icon><Rank /></el-icon>
                             <span>{{ exam.questionCount }}题</span>
                           </div>
                           <div class="flex items-center text-sm text-gray-500">
-                            <el-icon><Menu /></el-icon>
+                            <el-icon><Rank /></el-icon>
                             <span>{{ exam.updateDate }}</span>
                           </div>
                         </div>
@@ -227,9 +227,9 @@
 </template>
 
 <script setup>
-import { ref, reactive, onMounted, computed, onUnmounted  } from 'vue';
+import { ref, reactive, onMounted, computed, onUnmounted } from 'vue';
 import { 
-  Search, Menu, User, Coffee, Plus, ArrowLeft, ArrowRight
+  Search, Coffee, User as UsersIcon, Rank, ArrowLeft, ArrowRight, Briefcase as BriefcaseIcon, Menu
 } from '@element-plus/icons-vue';
 
 // 状态管理
@@ -299,7 +299,7 @@ const techSections = reactive([
   {
     id: 'algorithm',
     name: '算法',
-    iconClass: Plus,
+    iconClass: Menu,
     examCount: 22,
     scrollPosition: 0,
     scrollContainer: null,
@@ -488,3 +488,126 @@ onUnmounted(() => {
 });
 </script>
 
+<style scoped>
+/* 全局样式 */
+:root {
+  --primary-color: #1989FA;
+  --secondary-color: #FFC107;
+  --success-color: #25C482;
+  --warning-color: #FF7D00;
+  --danger-color: #F56C6C;
+  --info-color: #909399;
+  --light-color: #F8F9FA;
+  --dark-color: #333333;
+}
+
+.app-container {
+  font-family: 'Inter', system-ui, sans-serif;
+  background-color: #f8f9fa;
+  color: var(--dark-color);
+}
+
+.container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+/* 筛选栏样式 */
+.filter-bar {
+  background-color: white;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  padding: 1rem 0;
+  transition: box-shadow 0.3s ease;
+}
+
+/* 左侧导航样式 */
+.left-nav {
+  .el-menu {
+    border-right: none;
+  }
+  
+  .el-menu-item {
+    padding: 0 1rem !important;
+    margin: 0.25rem 0;
+    border-radius: 0.375rem;
+    transition: all 0.2s ease;
+    
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.03);
+    }
+    
+    &.is-active {
+      background-color: rgba(25, 137, 250, 0.1);
+      color: var(--primary-color);
+      font-weight: 500;
+    }
+  }
+}
+
+/* 题库卡片样式 */
+.exam-card {
+  border: 1px solid #e5e7eb;
+  transition: all 0.3s ease;
+  
+  &:hover {
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    transform: translateY(-2px);
+  }
+}
+
+/* 技术标签样式 */
+.el-tag {
+  padding: 0 0.75rem;
+  height: 1.75rem;
+  line-height: 1.75rem;
+  font-size: 0.875rem;
+  
+  &.danger {
+    background-color: rgba(245, 108, 108, 0.1);
+    color: var(--danger-color);
+    border-color: rgba(245, 108, 108, 0.2);
+  }
+  
+  &.warning {
+    background-color: rgba(255, 125, 0, 0.1);
+    color: var(--warning-color);
+    border-color: rgba(255, 125, 0, 0.2);
+  }
+  
+  &.primary {
+    background-color: rgba(25, 137, 250, 0.1);
+    color: var(--primary-color);
+    border-color: rgba(25, 137, 250, 0.2);
+  }
+  
+  &.success {
+    background-color: rgba(37, 196, 130, 0.1);
+    color: var(--success-color);
+    border-color: rgba(37, 196, 130, 0.2);
+  }
+  
+  &.info {
+    background-color: rgba(144, 147, 153, 0.1);
+    color: var(--info-color);
+    border-color: rgba(144, 147, 153, 0.2);
+  }
+}
+
+/* 隐藏滚动条 */
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+  .left-nav {
+    margin-bottom: 1.5rem;
+  }
+}
+</style>

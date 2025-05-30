@@ -6,6 +6,8 @@ import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 import axios from 'axios'
+import './assets/tailwind.css'
+
 
 
 axios.defaults.baseURL = 'http://localhost:8000'  // 设置后端基础地址
