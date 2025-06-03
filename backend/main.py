@@ -117,3 +117,23 @@ def delete_file(filename: str):
             save_metadata(metadata)
         return {"message": f"{filename} 已删除"}
     return JSONResponse(status_code=404, content={"message": "文件不存在"})
+
+@app.get("/question-data/")
+async def get_question_data(
+    domain: str = Query(..., description="领域名称，例如：AI"),
+    position: str = Query(..., description="岗位名称，例如：AIAlgorithmEngineer")
+):
+    # 构建文件路径
+    file_path = os.path.join("QuestionData", domain, f"{position}.json")
+    
+    # 检查文件是否存在
+    if not os.path.exists(file_path):
+        raise HTTPException(status_code=404, detail="找不到对应的问题数据文件")
+    
+    # 读取并返回文件内容
+    try:
+        with open(file_path, "r", encoding="utf-8") as file:
+            data = json.load(file)
+        return data
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"读取文件时发生错误: {str(e)}")

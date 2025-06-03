@@ -1,0 +1,176 @@
+{
+  "title": "AI算法工程师面试题库",
+  "totalQuestions": 200,
+  "updateDate": "2025-05-31",
+  "sections": [
+    {
+      "id": "ml-basics",
+      "name": "机器学习基础",
+      "icon": "🤖",
+      "exams": [
+        {
+          "id": "ml-basics-1",
+          "title": "机器学习常见算法原理",
+          "questionCount": 30,
+          "updateDate": "2025-05-20",
+          "difficulty": "中级",
+          "tags": ["监督学习", "无监督学习", "分类算法", "回归算法", "集成学习"]
+        },
+        {
+          "id": "ml-basics-2",
+          "title": "模型评估与选择",
+          "questionCount": 20,
+          "updateDate": "2025-05-18",
+          "difficulty": "中级",
+          "tags": ["交叉验证", "过拟合", "欠拟合", "模型选择", "不平衡数据"]
+        }
+      ]
+    },
+    {
+      "id": "deep-learning",
+      "name": "深度学习",
+      "icon": "🧠",
+      "exams": [
+        {
+          "id": "deep-learning-1",
+          "title": "神经网络基础",
+          "questionCount": 25,
+          "updateDate": "2025-05-25",
+          "difficulty": "高级",
+          "tags": ["神经网络", "反向传播", "激活函数", "梯度下降", "权重初始化"]
+        },
+        {
+          "id": "deep-learning-2",
+          "title": "卷积神经网络(CNN)",
+          "questionCount": 20,
+          "updateDate": "2025-05-22",
+          "difficulty": "高级",
+          "tags": ["CNN", "图像识别", "卷积层", "池化层", "目标检测"]
+        },
+        {
+          "id": "deep-learning-3",
+          "title": "循环神经网络(RNN)",
+          "questionCount": 15,
+          "updateDate": "2025-05-20",
+          "difficulty": "高级",
+          "tags": ["RNN", "LSTM", "GRU", "序列建模", "注意力机制"]
+        }
+      ]
+    },
+    {
+      "id": "computer-vision",
+      "name": "计算机视觉",
+      "icon": "📷",
+      "exams": [
+        {
+          "id": "cv-1",
+          "title": "图像分类与特征提取",
+          "questionCount": 18,
+          "updateDate": "2025-05-28",
+          "difficulty": "高级",
+          "tags": ["ResNet", "EfficientNet", "特征金字塔", "迁移学习"]
+        },
+        {
+          "id": "cv-2",
+          "title": "目标检测与分割",
+          "questionCount": 16,
+          "updateDate": "2025-05-26",
+          "difficulty": "高级",
+          "tags": ["Anchor机制", "NMS", "语义分割", "实例分割"]
+        }
+      ]
+    },
+    {
+      "id": "nlp",
+      "name": "自然语言处理",
+      "icon": "🗣️",
+      "exams": [
+        {
+          "id": "nlp-1",
+          "title": "NLP基础",
+          "questionCount": 20,
+          "updateDate": "2025-05-24",
+          "difficulty": "中级",
+          "tags": ["分词", "词性标注", "命名实体识别", "情感分析", "知识图谱"]
+        },
+        {
+          "id": "nlp-2",
+          "title": "预训练模型",
+          "questionCount": 18,
+          "updateDate": "2025-05-30",
+          "difficulty": "高级",
+          "tags": ["BERT", "GPT", "Transformer", "Prompt学习", "LoRA"]
+        }
+      ]
+    },
+    {
+      "id": "reinforcement-learning",
+      "name": "强化学习",
+      "icon": "🎮",
+      "exams": [
+        {
+          "id": "rl-1",
+          "title": "强化学习基础",
+          "questionCount": 15,
+          "updateDate": "2025-05-19",
+          "difficulty": "高级",
+          "tags": ["MDP", "Q-Learning", "策略梯度", "连续动作空间"]
+        },
+        {
+          "id": "rl-2",
+          "title": "深度强化学习",
+          "questionCount": 12,
+          "updateDate": "2025-05-17",
+          "difficulty": "高级",
+          "tags": ["DQN", "PPO", "AlphaGo", "多智能体"]
+        }
+      ]
+    },
+    {
+      "id": "data-preprocessing",
+      "name": "数据预处理与工程",
+      "icon": "⚙️",
+      "exams": [
+        {
+          "id": "dp-1",
+          "title": "数据清洗与特征工程",
+          "questionCount": 15,
+          "updateDate": "2025-05-20",
+          "difficulty": "中级",
+          "tags": ["缺失值处理", "异常检测", "特征选择", "时间序列"]
+        },
+        {
+          "id": "dp-2",
+          "title": "数据Pipeline设计",
+          "questionCount": 10,
+          "updateDate": "2025-05-18",
+          "difficulty": "中级",
+          "tags": ["ETL流程", "分布式处理", "数据版本控制"]
+        }
+      ]
+    },
+    {
+      "id": "algorithm-optimization",
+      "name": "算法优化与分布式训练",
+      "icon": "🚀",
+      "exams": [
+        {
+          "id": "ao-1",
+          "title": "模型压缩与加速",
+          "questionCount": 12,
+          "updateDate": "2025-05-27",
+          "difficulty": "高级",
+          "tags": ["剪枝", "量化", "知识蒸馏", "硬件感知优化"]
+        },
+        {
+          "id": "ao-2",
+          "title": "分布式训练",
+          "questionCount": 10,
+          "updateDate": "2025-05-29",
+          "difficulty": "高级",
+          "tags": ["数据并行", "模型并行", "梯度同步", "内存优化"]
+        }
+      ]
+    }
+  ]
+}

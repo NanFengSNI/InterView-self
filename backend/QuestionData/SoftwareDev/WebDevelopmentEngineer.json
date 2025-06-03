@@ -1,0 +1,84 @@
+{
+  "title": "Web前端开发面试题库",
+  "totalQuestions": 150,
+  "updateDate": "2023-11-20",
+  "sections": [
+    {
+      "id": "html-css",
+      "name": "HTML/CSS",
+      "icon": "📄",
+      "exams": [
+        {
+          "id": "html-css-1",
+          "title": "HTML5新特性",
+          "questionCount": 20,
+          "updateDate": "2023-11-15",
+          "difficulty": "初级",
+          "tags": ["语义化标签", "Canvas", "Web Storage", "拖放API"]
+        },
+        {
+          "id": "html-css-2",
+          "title": "CSS3与布局",
+          "questionCount": 25,
+          "updateDate": "2023-11-10",
+          "difficulty": "中级",
+          "tags": ["Flexbox", "Grid", "响应式设计", "动画效果"]
+        }
+      ]
+    },
+    {
+      "id": "javascript",
+      "name": "JavaScript",
+      "icon": "💡",
+      "exams": [
+        {
+          "id": "javascript-1",
+          "title": "JavaScript基础",
+          "questionCount": 30,
+          "updateDate": "2023-11-05",
+          "difficulty": "中级",
+          "tags": ["数据类型", "作用域", "闭包", "原型链"]
+        },
+        {
+          "id": "javascript-2",
+          "title": "异步编程",
+          "questionCount": 22,
+          "updateDate": "2023-11-18",
+          "difficulty": "高级",
+          "tags": ["Promise", "async/await", "事件循环", "回调地狱"]
+        },
+        {
+          "id": "javascript-3",
+          "title": "ES6+新特性",
+          "questionCount": 18,
+          "updateDate": "2023-11-20",
+          "difficulty": "中级",
+          "tags": ["箭头函数", "解构赋值", "扩展运算符", "模块化"]
+        }
+      ]
+    },
+    {
+      "id": "frameworks",
+      "name": "前端框架",
+      "icon": "🔧",
+      "exams": [
+        {
+          "id": "frameworks-1",
+          "title": "React基础",
+          "questionCount": 20,
+          "updateDate": "2023-11-12",
+          "difficulty": "中级",
+          "tags": ["组件", "状态管理", "生命周期", "虚拟DOM"]
+        },
+        {
+          "id": "frameworks-2",
+          "title": "Vue.js基础",
+          "questionCount": 15,
+          "updateDate": "2023-11-08",
+          "difficulty": "中级",
+          "tags": ["响应式原理", "组件通信", "Vue Router", "Vuex"]
+        }
+      ]
+    }
+  ]
+}
